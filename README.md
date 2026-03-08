@@ -50,3 +50,6 @@ Node.js (v18+ recommended)
 
 #Postman collection runner
 - run with the following -> "npm run postman"
+
+#This project connected to GitHub acction
+- tests are running for each merge or approved PR to the main remote branch
