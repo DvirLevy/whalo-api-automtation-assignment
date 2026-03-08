@@ -6,32 +6,35 @@ import Login from '../APIs/Login';
 import WheelSpin from '../APIs/WheelSpin';
 import { testData } from '../infrastructure/testData'
 import {ValidateWheelSpin} from '../validatores/validateWheelSpin'
+import { ValidateLogin } from '../validatores/validateLogin';
 
 
-test("test create user",async({request})=>{
+test("Sanity - New user login and executing a Wheelspin | Data Verification ",async({request})=>{
 
     const userData = await Utils.createNewUser()
     const context = new StateContext(userData)
+    let loginData:any
+    let respWheelSpin:any
 
-    await test.step('Executing Login Request and storing response data', async()=>{
-        const loginData = await Login(request,userData)
+    await test.step('Executing New User Login Request and storing response data', async()=>{
+        loginData = await Login(request,userData)
         context.updateContext({loginResponse:loginData, snapshotLabel:SnapshotType.BEFORE_SPIN})
         console.log(context.getSnapshot(SnapshotType.BEFORE_SPIN))
+        context.updateContext({loginResponse:loginData, snapshotLabel:SnapshotType.BEFORE_SPIN})
     })
 
-    await test.step("relogin to the same user" , async()=>{
-        const reloginData = await Login(request,{DeviceId:context.deviceId, LoginSource:context.loginSource})
-        context.updateContext({loginResponse:reloginData, snapshotLabel: SnapshotType.AFTER_RELOGIN})
-        console.log(context.getSnapshot(SnapshotType.AFTER_RELOGIN))
+    await test.step('Validating Login response structure, Login Balance', async ()=>{
+        await ValidateLogin.validateLoginStructure(loginData)
+        await ValidateLogin.validateLoginBalance(loginData)    
     })
 
-    await test.step('wheel spin', async()=>{
-        const respWheelSpin = await WheelSpin(request,testData.wheelSpin,context.accessToken)
+    await test.step('Executing WheelSpin Request and storing data', async()=>{
+        respWheelSpin = await WheelSpin(request,testData.wheelSpin,context.accessToken)
         context.updateAfterSpin({spinResponse:respWheelSpin,snapshotLabel:SnapshotType.AFTER_SPIN})
         console.log(context.getSnapshot(SnapshotType.AFTER_SPIN))
-        context.spin ? console.log(await ValidateWheelSpin.getCoinsRewarded(context.spin.rewards)): null
-        
     })
+
+
     
   
 })
