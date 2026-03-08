@@ -4,6 +4,7 @@ import { get } from 'http';
 import { StateContext } from '../infrastructure/state/StateContext';
 import { SnapshotType } from '../infrastructure/state/Snapshot.types';
 
+
 export class ValidateWheelSpin{
     static async validateSpinStructure(spinResponse: any) {
         expect(spinResponse).toBeTruthy();
@@ -40,5 +41,13 @@ export class ValidateWheelSpin{
         const coinRewarded = rewards.find(
         reward => reward.RewardDefinitionType === 1 && reward.RewardResourceType === 1)
         return coinRewarded?.Amount ?? null
+    }
+
+    static async isRewardGrantedOnce(reward: Reward[], rewardLenBeforeSpin:number):Promise<boolean>{
+        const rewardLen = reward.length
+        if(rewardLen-rewardLenBeforeSpin === 1)
+            return true
+        else
+            return false
     }
 }
