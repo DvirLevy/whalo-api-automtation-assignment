@@ -1,0 +1,17 @@
+
+# Playwright
+node_modules/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Playwright artifacts
+.playwright/
+playwright-report/
+test-results/
+traces/
+videos/
+screenshots/
+
+#env
+.env*
