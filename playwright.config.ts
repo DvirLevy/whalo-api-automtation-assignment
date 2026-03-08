@@ -9,6 +9,10 @@ console.log(`Loading environment from ${envFile}, ${process.env.HOST}`)
 
 export default defineConfig({
   testDir: './tests',
+  timeout: 30 * 1000, // general test timeout
+  expect: {
+    timeout: 10000 //for expect method
+  },
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
