@@ -1,0 +1,161 @@
+{
+  "info": {
+    "_postman_id": "df213bce-2e15-4e36-9421-831e20d34a9a",
+    "name": "Login and WheelSpin",
+    "description": "Postman collection for Login and WheelSpin APIs. Login generates timestamp-based payload values and stores AccessToken for the next request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45926930",
+    "_collection_link": "https://go.postman.co/collection/45926930-df213bce-2e15-4e36-9421-831e20d34a9a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const ts = Date.now().toString();",
+              "pm.collectionVariables.set('ts', ts);",
+              "pm.collectionVariables.set('deviceId', `candidate_test_${ts}`);",
+              "pm.collectionVariables.set('loginSource', `test_${ts}`);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "",
+              "const token = json.response.LoginResponse.AccessToken;",
+              "",
+              "pm.collectionVariables.set(\"accessToken\", token);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"DeviceId\": \"{{deviceId}}\",\n  \"LoginSource\": \"{{loginSource}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fof-devplayground-api.whalosvc.com/api/frontend/login/v4/login",
+          "protocol": "https",
+          "host": [
+            "fof-devplayground-api",
+            "whalosvc",
+            "com"
+          ],
+          "path": [
+            "api",
+            "frontend",
+            "login",
+            "v4",
+            "login"
+          ]
+        },
+        "description": "Generates timestamp-based DeviceId and LoginSource, then stores loginResponse.AccessToken into collection variable accessToken."
+      },
+      "response": []
+    },
+    {
+      "name": "WheelSpin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('WheelSpin request sent', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202, 400, 401, 403, 404, 409, 500]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "accessToken",
+            "value": "{{accessToken}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"multiplier\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fof-devplayground-api.whalosvc.com/api/frontend/wheel//v1",
+          "protocol": "https",
+          "host": [
+            "fof-devplayground-api",
+            "whalosvc",
+            "com"
+          ],
+          "path": [
+            "api",
+            "frontend",
+            "wheel",
+            "",
+            "v1"
+          ]
+        },
+        "description": "Uses accessToken saved from the Login response and sends the fixed payload { \"multiplier\": 1 }."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "ts",
+      "value": ""
+    },
+    {
+      "key": "deviceId",
+      "value": ""
+    },
+    {
+      "key": "loginSource",
+      "value": ""
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ]
+}

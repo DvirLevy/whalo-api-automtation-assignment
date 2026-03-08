@@ -9,7 +9,7 @@ import {ValidateWheelSpin} from '../validatores/validateWheelSpin'
 import { ValidateLogin } from '../validatores/validateLogin';
 
 
-test("Sanity - New user login and executing a Wheelspin | Data Verification ",async({request})=>{
+test("Multiple WheelSpin execution",async({request})=>{
 
     const userData = await Utils.createNewUser()
     const context = new StateContext(userData)
@@ -40,18 +40,18 @@ test("Sanity - New user login and executing a Wheelspin | Data Verification ",as
         console.log(context.getSnapshot(SnapshotType.AFTER_SPIN))
     })
 
-    await test.step('Executing 2nd WheelSpin Request and storing data', async()=>{
+    await test.step('Executing 3rd WheelSpin Request and storing data', async()=>{
         respWheelSpin = await WheelSpin(request,testData.wheelSpin,context.accessToken)
         context.updateAfterSpin({spinResponse:respWheelSpin,snapshotLabel:SnapshotType.AFTER_SPIN})
         console.log(context.getSnapshot(SnapshotType.AFTER_SPIN))
     })
-    await test.step('Executing 2nd WheelSpin Request and storing data', async()=>{
+    await test.step('Executing 4th WheelSpin Request and storing data', async()=>{
         respWheelSpin = await WheelSpin(request,testData.wheelSpin,context.accessToken)
         context.updateAfterSpin({spinResponse:respWheelSpin,snapshotLabel:SnapshotType.AFTER_SPIN})
         console.log(context.getSnapshot(SnapshotType.AFTER_SPIN))
     })
 
-    await test.step("Executing Relogin request and check balance" , async()=>{
+    await test.step("Executing Relogin request and validation balance params" , async()=>{
         const expectBalance = context.getSnapshot(SnapshotType.AFTER_SPIN).balance.Coins
         const reloginData = await Login(request,{DeviceId:context.deviceId, LoginSource:context.loginSource})
         context.updateContext({loginResponse:reloginData, snapshotLabel: SnapshotType.AFTER_RELOGIN})

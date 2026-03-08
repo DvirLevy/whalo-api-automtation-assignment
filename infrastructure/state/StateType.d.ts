@@ -1,5 +1,9 @@
 import { SnapshotType } from "./Snapshot.types";
 
+export type UserData = {
+  DeviceId:string,
+  LoginSource:string
+}
 export interface Balance {
   Coins: number;
   Gems?: number;
@@ -10,7 +14,7 @@ export interface Reward {
   RewardDefinitionType: number;
   RewardResourceType: number;
   Amount: number;
-  Multiplier?: number;   ///****************check if neaded; already in payload ******/
+  Multiplier?: number;  
   TrackingId?: string;
 }
 

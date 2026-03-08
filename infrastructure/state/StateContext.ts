@@ -25,17 +25,6 @@ export class StateContext {
     this._session={}
   }
 
-  /**
-   * Factory method: creates a new StateContext instance
-   */
-  static createTestContext(params: { DeviceId: string; LoginSource: string }): StateContext {
-    return new StateContext(params);
-  }
-
-  // -------------------------
-  // Getters (read-only access)
-  // -------------------------
-
   get deviceId(): string {
     return this._deviceId;
   }
@@ -70,23 +59,10 @@ export class StateContext {
     return snapshotData;
   }
 
-  /**
-   * Returns a snapshot if it exists, otherwise undefined.
-   */
-  tryGetSnapshot(label: SnapshotLabel): BalanceSnapshot | undefined {
-    return this._snapshots.get(label);
-  }
-
-  /**
-   * Returns all snapshots as a read-only copy.
-   */
   getAllSnapshots(): ReadonlyMap<SnapshotLabel, BalanceSnapshot> {
     return new Map(this._snapshots);
   }
 
-  // -------------------------
-  // Mutators (state updates)
-  // -------------------------
 
   setAccessToken(token: string): void {
     this._accessToken = token;
@@ -96,9 +72,6 @@ export class StateContext {
     this._notes.push(note);
   }
 
-  /**
-   * Saves a balance snapshot for a specific label.
-   */
   saveBalanceSnapshot(label: SnapshotLabel, balance: Balance): void {
     let dateCreated = Date.now()
     this._snapshots.set(label, {
@@ -108,9 +81,6 @@ export class StateContext {
     });
   }
 
-  /**
-   * Updates the spin state after a wheel spin action.
-   */
   setSpinState(params: { selectedIndex?: number; rewards: Reward[]; balanceAfterSpin?: Balance }): void {
     this._spin = {
       selectedIndex: params.selectedIndex,
@@ -119,15 +89,6 @@ export class StateContext {
     };
   }
 
-  // -------------------------
-  // Generic context updates from API responses
-  // -------------------------
-
-  /**
-   * Updates the context using a login response:
-   * - stores the access token
-   * - optionally stores a balance snapshot (based on the provided label)
-   */
   updateContext(params: { loginResponse: any, snapshotLabel?: SnapshotType }): void {
     const { loginResponse, snapshotLabel } = params;
 
@@ -144,16 +105,9 @@ export class StateContext {
     }
   }
 
-  /**
-   * Updates the context using a spin response:
-   * - stores rewards and selected index
-   * - optionally stores a snapshot after the spin
-   */
   updateAfterSpin(params: { spinResponse: any; snapshotLabel?: SnapshotLabel }): void {
     const { spinResponse, snapshotLabel } = params;
 
-    // Based on API structure:
-    // response.SelectedIndex + response.SpinResult.Rewards + response.SpinResult.UserBalance
     const selectedIndex = spinResponse?.SelectedIndex;
     const rewards: Reward[] = spinResponse?.SpinResult?.Rewards ?? [];
     const balance: Balance | undefined = spinResponse?.SpinResult?.UserBalance;
@@ -167,21 +121,5 @@ export class StateContext {
     if (snapshotLabel && balance) {
       this.saveBalanceSnapshot(snapshotLabel, balance)
     }
-  }
-
-  // -------------------------
-  // Static utility methods
-  // -------------------------
-
-  /**
-   * Finds the rewarded coins from the rewards list.
-   * Coins are defined as:
-   * RewardDefinitionType = 1 && RewardResourceType = 1
-   */
-  static getCoinsReward(rewards: Reward[]): Reward | null {
-    const coinReward = rewards.find(
-      (r) => r.RewardDefinitionType === 1 && r.RewardResourceType === 1
-    );
-    return coinReward ?? null;
   }
 }

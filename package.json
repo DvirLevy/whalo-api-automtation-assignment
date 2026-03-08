@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ENV=development npx playwright test --debug",
+    "dev": "cross-env ENV=development npx playwright test",
     "report": "npx playwright show-report",
-    "prod": "ENV=prod npx playwright test"
+    "prod": "cross-env ENV=prod npx playwright test",
+    "postman": "newman run postman/whalo-assignment.postman_collection"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,8 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.3.3",
-    "dotenv": "^17.3.1"
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.3.1",
+    "newman": "^6.2.2"
   }
 }

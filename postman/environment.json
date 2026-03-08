@@ -1,0 +1,33 @@
+{
+  "id": "whalo-assignment-env",
+  "name": "whalo-assignment",
+  "_postman_variable_scope": "environment",
+  "values": [
+    {
+      "key": "ts",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "deviceId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "loginSource",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "secret",
+      "enabled": true
+    }
+  ],
+  "_postman_exported_at": "2026-03-08T20:33:30.000Z",
+  "_postman_exported_using": "Postman"
+}

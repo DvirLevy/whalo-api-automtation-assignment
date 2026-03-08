@@ -39,7 +39,7 @@ test("Required End-to-End flow",async({request})=>{
         }
     })
 
-    await test.step("Executing Relogin request and check balance" , async()=>{
+    await test.step("Executing Relogin request and verify balance" , async()=>{
         const expectBalance = context.getSnapshot(SnapshotType.AFTER_SPIN).balance.Coins
         const reloginData = await Login(request,{DeviceId:context.deviceId, LoginSource:context.loginSource})
         context.updateContext({loginResponse:reloginData, snapshotLabel: SnapshotType.AFTER_RELOGIN})
