@@ -1,8 +1,7 @@
 {
   "name": "whalo-assignment",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Fish-of-Fortune-Automation",
   "scripts": {
     "dev": "cross-env ENV=development npx playwright test",
     "report": "npx playwright show-report",
@@ -10,7 +9,7 @@
     "postman": "newman run postman/whalo-assignment.postman_collection"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dvir Levy",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
