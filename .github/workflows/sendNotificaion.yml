@@ -1,0 +1,43 @@
+name: Notify by Email After Regression
+
+on:
+  workflow_run:
+    workflows:
+      - Run API testing FOF
+    types:
+      - completed
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+
+          subject: >
+            ${{ github.event.workflow_run.conclusion == 'success' && '✅' || '❌' }}
+            Fish of Fortune Regression – Run #${{ github.event.workflow_run.id }}
+
+          body: |
+            API testing execution finished.
+
+            Status:
+            ${{ github.event.workflow_run.conclusion }}
+
+            🔗 Fish of Fortune -  Live Testing Report :
+            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/?${{ github.event.workflow_run.id }}
+
+            🧪 Test Run ID:
+            ${{ github.event.workflow_run.id }}
+
+            🔍 GitHub Actions Logs:
+            ${{ github.event.workflow_run.html_url }}
+
+          to: ${{ secrets.GMAIL_USER }}
+          from: Fish of Fortune CI <${{ secrets.GMAIL_USER }}>
