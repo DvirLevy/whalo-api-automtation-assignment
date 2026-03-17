@@ -7,7 +7,8 @@
     "report": "npx playwright show-report",
     "prod": "cross-env ENV=prod npx playwright test",
     "postman": "newman run postman/whalo-assignment.postman_collection",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"**/*.ts\""
   },
   "keywords": [],
   "author": "Dvir Levy",
@@ -19,6 +20,7 @@
     "cross-env": "^10.1.0",
     "dotenv": "^17.3.1",
     "newman": "^6.2.2",
+    "prettier": "^3.0.0",
     "typescript": "^5.0.0"
   }
 }

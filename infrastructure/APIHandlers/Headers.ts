@@ -2,7 +2,7 @@
 // pay attention access token is not handle here
 
 const HEADERS = {
-    "Content-Type": "application/json"
+  'Content-Type': 'application/json'
 }
 
-export {HEADERS}
+export { HEADERS }

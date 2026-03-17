@@ -1,6 +1,5 @@
 export const testData = {
-    
-    wheelSpin: {
-        multiplier:1
-    }
+  wheelSpin: {
+    multiplier: 1
+  }
 }
