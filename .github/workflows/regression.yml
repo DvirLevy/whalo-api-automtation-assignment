@@ -37,11 +37,22 @@ jobs:
           HOST: ${{ vars.HOST }}
         run: npm run prod
       
-      - name: Upload Playwright report as Pages artifact
+      - name: Setup Java for Allure
+        if: always()
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' 
+          java-version: '21'
+
+      - name: Generate Allure Report
+        if: always()
+        run: npm run allure:generate
+
+      - name: Upload Allure report as Pages artifact
         if: always()
         uses: actions/upload-pages-artifact@v4
         with:
-          path: playwright-report
+          path: allure-report
           name: github-pages
           retention-days: 1
     
