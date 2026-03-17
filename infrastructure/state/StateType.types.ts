@@ -4,13 +4,13 @@ export type UserData = {
   DeviceId: string
   LoginSource: string
 }
-export interface Balance {
+export type Balance = {
   Coins: number
   Gems?: number
   Energy: number
 }
 
-export interface Reward {
+export type Reward = {
   RewardDefinitionType: number
   RewardResourceType: number
   Amount: number
@@ -20,13 +20,13 @@ export interface Reward {
 
 export type SnapshotLabel = SnapshotType.BEFORE_SPIN | SnapshotType.AFTER_SPIN | SnapshotType.AFTER_RELOGIN
 
-export interface BalanceSnapshot {
+export type BalanceSnapshot = {
   label: SnapshotLabel
   dateCreated: string
   balance: Balance
 }
 
-export interface SpinState {
+export type SpinState = {
   selectedIndex?: number
   rewards: Reward[]
   balanceAfterSpin?: Balance

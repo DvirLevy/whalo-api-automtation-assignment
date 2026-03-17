@@ -1,5 +1,5 @@
 import { SnapshotType } from './Snapshot.types'
-import { Reward, BalanceSnapshot, Balance, SpinState, SnapshotLabel } from './StateType'
+import { Reward, BalanceSnapshot, Balance, SpinState, SnapshotLabel } from './StateType.types'
 
 export class StateContext {
   private _deviceId: string

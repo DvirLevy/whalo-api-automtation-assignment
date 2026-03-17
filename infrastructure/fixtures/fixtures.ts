@@ -5,7 +5,7 @@ import { SnapshotType } from '../state/Snapshot.types'
 import Login from '../../APIs/Login'
 import WheelSpin from '../../APIs/WheelSpin'
 import { testData } from '../testData'
-import { UserData } from '../state/StateType'
+import { UserData } from '../state/StateType.types'
 
 type Fixtures = {
   userData: UserData
@@ -15,7 +15,7 @@ type Fixtures = {
 }
 
 export const test = base.extend<Fixtures>({
-  userData: async ({}, use) => {
+  userData: async ({ }, use) => {
     const userData = await Utils.createNewUser()
     console.log(userData)
     await use(userData)
