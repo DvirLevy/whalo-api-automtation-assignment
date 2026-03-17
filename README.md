@@ -9,34 +9,8 @@ Playwright for API automation
 Postman collection for API
 Newman to run the Postman collection from CLI
 
-Project Structure
- ├─ APIs
- │   ├─ Login.ts
- │   └─ WheelSpin.ts
- │  
- ├─ infrastructure
- │   ├─APIHandlers
- │   │   ├─ APIRequest.ts
- │   │   └─ Headers.ts  
- │   │
- │   ├─ fixtures
- │   │   └─ fixtures.ts
- │   ├─ state
- |   │   ├─ Snapshot.types.ts
- │   │   ├─ StateContext.ts
- │   │   └─ Snapshot.types.ts
- │   ├─ testData.ts
- │   └─ Utils.ts
- │
- ├─ validators
- │   ├─ validateLogin.ts
- │   └─ validateWheelSpin.ts
- │
-tests
- │
-postman
 
-Prerequisites
+Pre-requisites
 Make sure the following tools are installed:
 Node.js (v18+ recommended)
 
